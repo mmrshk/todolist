@@ -14,7 +14,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'pundit'
 gem 'fast_jsonapi'
 gem 'bootsnap', '>= 1.1.0', require: false
-
+gem 'bcrypt'
 gem 'apipie-rails'
 
 group :development, :test do

@@ -4,6 +4,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       root to: 'projects#index'
 
+      namespace :auth do
+        post 'register', to: 'signup#create'
+        post 'login',    to: 'signin#create'
+      end
+
       resources :projects do
         resources :tasks
       end
