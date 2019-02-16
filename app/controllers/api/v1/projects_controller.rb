@@ -1,69 +1,52 @@
-require 'pry'
-
 class Api::V1::ProjectsController < ApplicationController
-  before_action :set_project
-
-  # GET /projects
-  # GET /projects.json
-  api :GET, "/projects", "Get list of projects"
+  before_action :authorize_request
+  before_action :set_current_project
 
   def index
-    @projects = Project.all
+    @projects = current_user.projects.all
 
     render json: @projects, status: :ok
   end
-
-  # GET /projects
-  # GET /projects.json
-  api :GET, "/project/:id", "Get list of projects"
-  param :id, String, "ID of the project", required: true
 
   def show
     render json: @project, status: :ok
   end
 
-  # POST /projects
-  # POST /projects.json
-  api :POST, "/projects", "Create a project"
-  param :name, String, "Name of the project", required: true
-
   def create
-    @project = Project.new(project_params)
-    @project.save
+    @project = current_user.projects.build(project_params)
 
-    render json: @project, status: :created
+    if @project.save
+      render json: @project, status: :created
+    elsif current_user.projects.find_by(name: params[:name])
+      render json: { message: 'The project with such name does already exist.' }, status: :conflict
+    else
+      render json: @project.errors, status: :unprocessable_entity
+    end
   end
-
-  # DELETE /projects/1
-  # DELETE /projects/1.json
-  api :DELETE, "/projects/:id", "Delete project"
-  param :id, String, "ID of the project", required: true
 
   def destroy
     return head(:ok) if @project.destroy
 
     head(:unprocessable_entity)
   end
-
-  # PATCH/PUT /projects/1
-  # PATCH/PUT /projects/1.json
-  api :PUT, "/projects/:id", "Update a project"
-  param :id, String, "ID of the project", required: true
-  param :name, String, "Name of the project", required: true
-
+  
   def update
-    @project.update(project_params)
-
-    render json: @project, status: :ok
+    if @project.update(project_params)
+      render json: @project, status: :ok
+    elsif current_user.projects.find_by(name: params[:name])
+      render json: { message: 'The project with such name does already exist.' }, status: :conflict
+    else
+      render json: @project.errors, status: :unprocessable_entity
+    end
   end
 
   private
 
   def project_params
-    params.permit(:name)
+    params.permit(:name, :user_id)
   end
 
-  def set_project
+  def set_current_project
     @project = Project.find_by(id: params[:id])
   end
 end

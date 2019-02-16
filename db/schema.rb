@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_12_033759) do
+ActiveRecord::Schema.define(version: 2019_02_13_194342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.text "text"
+    t.string "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "task_id"
+    t.index ["task_id"], name: "index_comments_on_task_id"
+  end
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
@@ -25,6 +34,9 @@ ActiveRecord::Schema.define(version: 2019_02_12_033759) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
+    t.boolean "completed", default: false
+    t.integer "position"
+    t.datetime "deadline"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "project_id"
@@ -38,6 +50,7 @@ ActiveRecord::Schema.define(version: 2019_02_12_033759) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "comments", "tasks"
   add_foreign_key "projects", "users"
   add_foreign_key "tasks", "projects"
 end

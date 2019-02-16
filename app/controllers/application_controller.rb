@@ -1,14 +1,22 @@
+require 'pry'
+
 class ApplicationController < ActionController::API
-  include JWTSessions::RailsAuthorization
-  rescue_from JWTSessions::Errors::Unauthorized, with: :not_authorized
+  attr_reader :current_user
 
-  private
-
-  def current_user
-    @current_user ||= User.find_by(id: payload['user_id'])
+  def not_found
+    render json: { error: 'not_found' }
   end
 
-  def not_authorized
-    render json: { error: "Not authorized" }, status: :unauthorized
+  def authorize_request
+    header = request.headers['Authorization']
+    header = header.split(' ').last if header
+    begin
+      @decoded = JsonWebToken.decode(header)
+      @current_user = User.find(@decoded[:user_id])
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { errors: e.message }, status: :unauthorized
+    rescue JWT::DecodeError => e
+      render json: { errors: e.message }, status: :unauthorized
+    end
   end
 end
