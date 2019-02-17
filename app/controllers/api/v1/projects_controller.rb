@@ -1,10 +1,8 @@
 class Api::V1::ProjectsController < ApplicationController
   before_action :authorize_request
-  before_action :set_current_project
+  load_and_authorize_resource through: :current_user
 
   def index
-    @projects = current_user.projects.all
-
     render json: @projects, status: :ok
   end
 
@@ -29,7 +27,7 @@ class Api::V1::ProjectsController < ApplicationController
 
     head(:unprocessable_entity)
   end
-  
+
   def update
     if @project.update(project_params)
       render json: @project, status: :ok
@@ -44,9 +42,5 @@ class Api::V1::ProjectsController < ApplicationController
 
   def project_params
     params.permit(:name, :user_id)
-  end
-
-  def set_current_project
-    @project = Project.find_by(id: params[:id])
   end
 end

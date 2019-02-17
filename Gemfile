@@ -17,6 +17,12 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bcrypt'
 gem 'simple_command'
 gem 'acts_as_list'
+gem 'cancancan', '~> 2.0'
+
+gem 'google-cloud-storage', '~> 1.8', require: false
+gem 'carrierwave'
+gem 'fog'
+gem 'mini_magick'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

@@ -1,16 +1,14 @@
 class Api::V1::TasksController < ApplicationController
   before_action :authorize_request
-  before_action :set_current_project
+
+  load_and_authorize_resource :project, through: :current_user
+  load_and_authorize_resource through: :project, shallow: true
 
   def index
-    @tasks = @project.tasks
-
     render json: @tasks, status: :ok
   end
 
   def show
-    @task = @project.tasks.find_by(id: params[:id])
-
     render json: @task
   end
 
@@ -42,10 +40,6 @@ class Api::V1::TasksController < ApplicationController
   end
 
   private
-
-  def set_current_project
-    @project = current_user.projects.find_by(id: params[:project_id])
-  end
 
   def task_params
     params.permit(:name, :project_id, :completed, :deadline, :move)

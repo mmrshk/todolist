@@ -1,19 +1,20 @@
 Rails.application.routes.draw do
-  resources :users, param: :_username
-  post '/auth/login', to: 'authentication#login'
-  # get '/*a', to: 'application#not_found'
-
   namespace :api do
     namespace :v1 do
-      root to: 'projects#index'
-
-      # namespace :auth do
-      #   post 'register', to: 'signup#create'
-      #   post 'login',    to: 'signin#create'
-      # end
-      resources :projects do
-        resources :tasks
+      namespace :auth do
+        resources :users, param: :username
+        post '/login', to: 'authentication#login'
       end
+
+      root to: 'projects#index'
+      resources :projects do
+        resources :tasks, only: %i[index create] do
+          resources :comments, only: %i[index create]
+        end
+      end
+
+      resources :tasks, only: %i[show update destroy]
+      resources :comments, only: %i[show update destroy]
     end
   end
 end
