@@ -1,7 +1,6 @@
 class Api::V1::Auth::UsersController < ApplicationController
   before_action :authorize_request, except: :create
   before_action :find_user, except: %i[create index]
-  attr_reader :user
 
   def index
     @users = User.all
