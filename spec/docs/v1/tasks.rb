@@ -1,29 +1,29 @@
 module Docs
   module V1
-    module Projects
+    module Tasks
       extend Dox::DSL::Syntax
 
       document :api do
-        resource 'Projects' do
-          endpoint '/projects'
-          group 'Projects'
+        resource 'Tasks' do
+          endpoint '/tasks'
+          group 'Tasks'
         end
       end
 
       document :index do
-        action 'Get projects'
+        action 'Get tasks'
       end
 
       document :create do
-        action 'Create project'
+        action 'Create task'
       end
 
       document :edit do
-        action 'Edit project'
+        action 'Edit task'
       end
 
       document :delete do
-        action 'Delete project'
+        action 'Delete task'
       end
     end
   end

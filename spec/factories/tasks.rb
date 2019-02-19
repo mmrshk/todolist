@@ -4,4 +4,8 @@ FactoryBot.define do
     completed { false }
     project
   end
+
+  trait :edited_task do
+    name { 'edited name' }
+  end
 end

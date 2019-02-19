@@ -29,7 +29,6 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def update
-    @task = @project.tasks.find_by(id: params[:id])
     command = UpdateTask.call(@task, task_params)
 
     if command.result

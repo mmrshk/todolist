@@ -1,29 +1,29 @@
 module Docs
   module V1
-    module Projects
+    module Comments
       extend Dox::DSL::Syntax
 
       document :api do
-        resource 'Projects' do
-          endpoint '/projects'
-          group 'Projects'
+        resource 'Comments' do
+          endpoint '/comments'
+          group 'Comments'
         end
       end
 
       document :index do
-        action 'Get projects'
+        action 'Get comments'
       end
 
       document :create do
-        action 'Create project'
+        action 'Create comment'
       end
 
       document :edit do
-        action 'Edit project'
+        action 'Edit comment'
       end
 
       document :delete do
-        action 'Delete project'
+        action 'Delete comment'
       end
     end
   end
