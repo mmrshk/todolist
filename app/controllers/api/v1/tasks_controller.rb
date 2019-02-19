@@ -5,18 +5,18 @@ class Api::V1::TasksController < ApplicationController
   load_and_authorize_resource through: :project, shallow: true
 
   def index
-    render json: @tasks, status: :ok
+    render :index, status: :ok
   end
 
   def show
-    render json: @task
+    render :show, status: :ok
   end
 
   def create
     @task = @project.tasks.build(task_params)
 
     if @task.save
-      render json: @task, status: :created
+      render :show, status: :created
     else
       render json: @task.errors, status: :unprocessable_entity
     end
@@ -32,7 +32,7 @@ class Api::V1::TasksController < ApplicationController
     command = UpdateTask.call(@task, task_params)
 
     if command.result
-      render json: @task, status: :ok
+      render :show, status: :ok
     else
       render json: @task.errors, status: :unprocessable_entity
     end

@@ -277,8 +277,9 @@ GEM
       concurrent-ruby (~> 1.0)
     ipaddress (0.8.3)
     jaro_winkler (1.5.2)
-    jb (0.6.0)
-      multi_json
+    jbuilder (2.8.0)
+      activesupport (>= 4.2.0)
+      multi_json (>= 1.2)
     json (2.1.0)
     json_matchers (0.10.0)
       json_schema
@@ -459,7 +460,7 @@ DEPENDENCIES
   figaro
   fog
   google-cloud-storage (~> 1.8)
-  jb
+  jbuilder
   json_matchers (~> 0.7)
   jwt
   listen (>= 3.0.5, < 3.2)

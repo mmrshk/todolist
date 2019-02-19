@@ -6,18 +6,18 @@ class Api::V1::CommentsController < ApplicationController
   load_and_authorize_resource through: :task, shallow: true
 
   def index
-    render json: @comments
+    render :index
   end
 
   def show
-    render json: @comment
+    render :show
   end
 
   def create
     @comment = @task.comments.build(comment_params)
 
     if @comment.save
-      render json: @comment, status: :created
+      render :show, status: :created
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -25,7 +25,7 @@ class Api::V1::CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      render json: @comment, status: :ok
+      render :show, status: :ok
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
