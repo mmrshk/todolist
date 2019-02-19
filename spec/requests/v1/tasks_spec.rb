@@ -42,6 +42,15 @@ RSpec.describe 'V1::Tasks API', type: :request do
     end
   end
 
+  describe 'GET /tasks/:id' do
+    include Docs::V1::Tasks::Get
+
+    it 'get task', :dox do
+      get "/api/v1/tasks/#{task.id}", headers: headers, params: task_params
+      expect(response).to have_http_status(200)
+    end
+  end
+
   describe 'DELETE /tasks/:id' do
     include Docs::V1::Tasks::Delete
 

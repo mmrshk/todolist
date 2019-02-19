@@ -4,17 +4,6 @@ RSpec.describe 'V1::Users', type: :request do
   include Docs::V1::Users::Api
 
   let(:user_params) { FactoryBot.attributes_for(:user) }
-  # let(:token) { JsonWebToken.encode(user_id: user_params[:id]) }
-  # let(:headers) { { authorization: token, accept: 'application/json' } }
-
-  # describe 'GET /api/v1/auth/users' do
-  #   include Docs::V1::Users::Index
-  #
-  #   it 'gets users', :dox do
-  #     get api_v1_auth_users_path, headers: headers
-  #     expect(response).to have_http_status(201)
-  #   end
-  # end
 
   describe 'POST /api/v1/auth/users' do
     include Docs::V1::Users::Create

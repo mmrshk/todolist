@@ -14,6 +14,10 @@ module Docs
         action 'Get tasks'
       end
 
+      document :get do
+        action 'Get task'
+      end
+
       document :create do
         action 'Create task'
       end

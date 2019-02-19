@@ -14,6 +14,10 @@ module Docs
         action 'Get projects'
       end
 
+      document :get do
+        action 'Get project'
+      end
+
       document :create do
         action 'Create project'
       end

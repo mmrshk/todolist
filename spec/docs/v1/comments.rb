@@ -14,6 +14,10 @@ module Docs
         action 'Get comments'
       end
 
+      document :get do
+        action 'Get comment'
+      end
+
       document :create do
         action 'Create comment'
       end

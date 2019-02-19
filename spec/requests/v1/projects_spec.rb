@@ -39,6 +39,15 @@ RSpec.describe 'V1::Projects API', type: :request do
     end
   end
 
+  describe 'GET /api/v1/projects/:id' do
+    include Docs::V1::Projects::Get
+
+    it 'get existed project', :dox do
+      get "/api/v1/projects/#{project.id}", headers: headers, params: project_params
+      expect(response).to have_http_status(200)
+    end
+  end
+
   describe "POST /projects" do
     it 'do not creates duplicate project' do
       2.times { post api_v1_projects_path, headers: headers, params: project_params }
