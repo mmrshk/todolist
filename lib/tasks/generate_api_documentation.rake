@@ -2,7 +2,8 @@ namespace :api do
   namespace :v1 do
     desc 'Generate API v1 documentation'
 
-    md_file, html_file = 'spec/docs/v1/docs.md', 'public/docs/v1.html'
+    md_file = 'spec/docs/v1/docs.md'
+    html_file = 'public/docs/v1.html'
 
     task :md do
       RSpec::Core::RakeTask.new(:api_spec) do |t|

@@ -66,7 +66,7 @@ RSpec.describe 'V1::Users', type: :request do
     let(:user) { FactoryBot.create(:user) }
 
     it 'log in user', :dox do
-      post api_v1_auth_login_path, params: {username: user.username, password: user.password}
+      post api_v1_auth_login_path, params: { username: user.username, password: user.password }
       expect(response).to have_http_status(200)
       expect(response.body).to include('You are successfully logged in!')
     end

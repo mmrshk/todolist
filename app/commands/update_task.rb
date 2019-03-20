@@ -6,7 +6,7 @@ class UpdateTask
   DIRECTIONS = {
     up: 'up',
     down: 'down'
-  }
+  }.freeze
 
   def initialize(task, params)
     @task = task
@@ -16,7 +16,7 @@ class UpdateTask
   def call
     change_position(@params[:move]) if @params[:move]
 
-    @task.update( { deadline: @params[:deadline], name: @params[:name], completed: @params[:completed] } )
+    @task.update(deadline: @params[:deadline], name: @params[:name], completed: @params[:completed])
   end
 
   private

@@ -31,10 +31,10 @@ RSpec.describe 'V1::Comments API', type: :request do
     let(:comments_count) { comments.count }
 
     it 'creates new comment' do
-      expect {
+      expect do
         post api_v1_project_task_comments_path(project_id: project.id, task_id: task.id), headers: headers,
-                                               params: comment_params
-      }.to change(Comment, :count).by(1)
+                                                                                          params: comment_params
+      end.to change(Comment, :count).by(1)
 
       expect(response).to have_http_status(201)
     end
@@ -45,7 +45,8 @@ RSpec.describe 'V1::Comments API', type: :request do
     end
 
     it 'creates new comment with file' do
-      post api_v1_project_task_comments_path(project_id: project.id, task_id: task.id), headers: headers, params: comment_params
+      post api_v1_project_task_comments_path(project_id: project.id, task_id: task.id), headers: headers,
+                                                                                        params: comment_params
       expect(response).to have_http_status(201)
     end
   end

@@ -25,9 +25,9 @@ RSpec.describe 'V1::Tasks API', type: :request do
     include Docs::V1::Tasks::Create
 
     it 'creates new task', :dox do
-      expect {
+      expect do
         post api_v1_project_tasks_path(project_id: project.id), headers: headers, params: task_params
-      }.to change(Task, :count).by(1)
+      end.to change(Task, :count).by(1)
 
       expect(response).to have_http_status(201)
     end

@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
 
-  PASSWORD_REGEX = /\A[a-zA-Z0-9]*\z/
+  PASSWORD_REGEX = /\A[a-zA-Z0-9]*\z/.freeze
 
   has_many :projects, dependent: :destroy
 
