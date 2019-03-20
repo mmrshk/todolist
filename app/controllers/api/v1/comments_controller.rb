@@ -34,6 +34,6 @@ class Api::V1::CommentsController < ApplicationController
   private
 
   def comment_params
-    params.permit(:text, :file, :file_cache, :remote_file_url, :task_id)
+    params.permit(:text, :file, :task_id)
   end
 end
