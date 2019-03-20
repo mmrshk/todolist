@@ -5,13 +5,7 @@ class Api::V1::CommentsController < ApplicationController
   load_and_authorize_resource :task, through: :project
   load_and_authorize_resource through: :task, shallow: true
 
-  def index
-    render :index
-  end
-
-  def show
-    render :show
-  end
+  def index; end
 
   def create
     @comment = @task.comments.build(comment_params)
@@ -32,7 +26,9 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def destroy
-    @comment.destroy
+    return head(:ok) if @comment.destroy
+
+    head(:unprocessable_entity)
   end
 
   private

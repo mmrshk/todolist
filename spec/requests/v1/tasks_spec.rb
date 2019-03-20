@@ -6,7 +6,7 @@ RSpec.describe 'V1::Tasks API', type: :request do
   let(:user) { FactoryBot.create(:user) }
   let(:token) { JsonWebToken.encode(user_id: user.id) }
   let(:project) { FactoryBot.create(:project, user_id: user.id) }
-  let(:tasks) { FactoryBot.create_list(:task, 3, project_id: project.id) }
+  let!(:tasks) { FactoryBot.create_list(:task, 3, project_id: project.id) }
   let(:task) { FactoryBot.create(:task, project_id: project.id) }
   let(:task_params) { FactoryBot.attributes_for(:task) }
 
@@ -16,8 +16,7 @@ RSpec.describe 'V1::Tasks API', type: :request do
     include Docs::V1::Tasks::Index
 
     it 'gets list of tasks', :dox do
-      tasks
-      get "/api/v1/projects/#{project.id}/tasks", headers: headers
+      get api_v1_project_tasks_path(project_id: project.id), headers: headers
       expect(response).to have_http_status(200)
     end
   end
@@ -26,17 +25,20 @@ RSpec.describe 'V1::Tasks API', type: :request do
     include Docs::V1::Tasks::Create
 
     it 'creates new task', :dox do
-      post "/api/v1/projects/#{project.id}/tasks", headers: headers, params: task_params
+      expect {
+        post api_v1_project_tasks_path(project_id: project.id), headers: headers, params: task_params
+      }.to change(Task, :count).by(1)
+
       expect(response).to have_http_status(201)
     end
   end
 
   describe 'PUT /tasks/:id' do
     include Docs::V1::Tasks::Edit
+    let(:edited_task) { FactoryBot.attributes_for(:task, :edited) }
 
     it 'update tasks', :dox do
-      edited_task = FactoryBot.attributes_for(:task, :edited)
-      put "/api/v1/tasks/#{task.id}", headers: headers, params: edited_task
+      put api_v1_task_path(id: task.id), headers: headers, params: edited_task
       expect(response).to have_http_status(200)
       expect(response.body).to include('edited name')
     end
@@ -46,7 +48,7 @@ RSpec.describe 'V1::Tasks API', type: :request do
     include Docs::V1::Tasks::Get
 
     it 'get task', :dox do
-      get "/api/v1/tasks/#{task.id}", headers: headers, params: task_params
+      get api_v1_task_path(id: task.id), headers: headers, params: task_params
       expect(response).to have_http_status(200)
     end
   end
@@ -55,7 +57,7 @@ RSpec.describe 'V1::Tasks API', type: :request do
     include Docs::V1::Tasks::Delete
 
     it 'delete tasks', :dox do
-      delete "/api/v1/tasks/#{task.id}", headers: headers
+      expect { delete api_v1_task_path(id: tasks.first.id), headers: headers }.to change(Task, :count).by(-1)
       expect(response).to have_http_status(200)
     end
   end

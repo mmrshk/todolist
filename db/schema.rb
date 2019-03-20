@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_194342) do
   enable_extension "plpgsql"
 
   create_table "comments", force: :cascade do |t|
-    t.text "text"
+    t.text "text", null: false
     t.string "file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_194342) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_194342) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.boolean "completed", default: false
     t.integer "position"
     t.datetime "deadline"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_194342) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username"
+    t.string "username", null: false
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
