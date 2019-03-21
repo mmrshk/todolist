@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   subject { FactoryBot.build(:user) }
 
-  it { should have_many(:projects).dependent(:destroy) }
+  it { is_expected.to have_many(:projects).dependent(:destroy) }
 
   it { expect(subject).to validate_presence_of(:username) }
   it { expect(subject).to validate_uniqueness_of :username }
