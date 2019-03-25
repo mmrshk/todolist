@@ -4,7 +4,6 @@ Rails.application.routes.draw do
       namespace :auth do
         resources :users, param: :username
         post '/login', to: 'authentication#login'
-        delete '/logout', to: 'authentication#logout'
       end
 
       root to: 'projects#index'

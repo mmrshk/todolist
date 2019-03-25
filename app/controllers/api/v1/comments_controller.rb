@@ -5,11 +5,7 @@ class Api::V1::CommentsController < ApplicationController
   load_and_authorize_resource :task, through: :project
   load_and_authorize_resource through: :task, shallow: true
 
-  def index; end
-
   def create
-    @comment = @task.comments.build(comment_params)
-
     if @comment.save
       render :show, status: :created
     else

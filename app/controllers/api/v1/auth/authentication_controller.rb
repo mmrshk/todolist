@@ -15,10 +15,6 @@ class Api::V1::Auth::AuthenticationController < ApplicationController
     end
   end
 
-  def logout
-    render json: { username: @current_user.username, message: 'You are successfully logged out!' }, status: :ok
-  end
-
   private
 
   def login_params

@@ -50,7 +50,7 @@ RSpec.describe 'V1::Projects API', type: :request do
   describe 'POST /projects' do
     it 'do not creates duplicate project' do
       2.times { post api_v1_projects_path, headers: headers, params: project_params }
-      expect(response).to have_http_status(409)
+      expect(response).to have_http_status(422)
       expect(response.body).to include('The project with such name does already exist.')
     end
   end

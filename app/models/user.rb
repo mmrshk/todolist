@@ -8,12 +8,13 @@ class User < ApplicationRecord
   validates :username, :password, :password_confirmation, presence: true
   validates :username, uniqueness: true, length: { minimum: 3, maximum: 50 }
   validates :password, length: { is: 8 }, confirmation: true
-  validates :password, format: { with: PASSWORD_REGEX, message: 'Only alphanumeric allowed' }
+  validates :password, format: { with: PASSWORD_REGEX, message: I18n.t('models.user.password') }
 
   def authorize
     token = JsonWebToken.encode(user_id: self.id)
     time = Time.zone.now + 24.hours.to_i
+
     { token: token, exp: time.strftime('%m-%d-%Y %H:%M'), username: self.username,
-      message: 'You are successfully logged in!' }
+      message: I18n.t('models.user.authorize') }
   end
 end

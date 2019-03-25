@@ -13,8 +13,6 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def create
-    @task = @project.tasks.build(task_params)
-
     if @task.save
       render :show, status: :created
     else
@@ -29,9 +27,9 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def update
-    command = UpdateTask.call(@task, task_params)
+    UpdateTaskPosition.call(@task, position_param)
 
-    if command.result
+    if @task.update(task_params)
       render :show, status: :ok
     else
       render json: @task.errors, status: :unprocessable_entity
@@ -41,6 +39,10 @@ class Api::V1::TasksController < ApplicationController
   private
 
   def task_params
-    params.permit(:name, :project_id, :completed, :deadline, :move)
+    params.permit(:name, :project_id, :completed, :deadline)
+  end
+
+  def position_param
+    params.permit(:position)
   end
 end
