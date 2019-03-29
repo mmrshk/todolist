@@ -22,9 +22,7 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def destroy
-    return head(:ok) if @comment.destroy
-
-    head(:unprocessable_entity)
+    @comment.destroy ? head(:ok) : head(:unprocessable_entity)
   end
 
   private

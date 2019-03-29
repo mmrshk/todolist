@@ -11,9 +11,7 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def destroy
-    return head(:ok) if @project.destroy
-
-    head(:unprocessable_entity)
+    @project.destroy ? head(:ok) : head(:unprocessable_entity)
   end
 
   def update

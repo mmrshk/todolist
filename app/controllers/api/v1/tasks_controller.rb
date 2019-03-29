@@ -4,14 +4,6 @@ class Api::V1::TasksController < ApplicationController
   load_and_authorize_resource :project, through: :current_user
   load_and_authorize_resource through: :project, shallow: true
 
-  def index
-    render :index, status: :ok
-  end
-
-  def show
-    render :show, status: :ok
-  end
-
   def create
     if @task.save
       render :show, status: :created
@@ -21,9 +13,7 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def destroy
-    return head(:ok) if @task.destroy
-
-    head(:unprocessable_entity)
+    @task.destroy ? head(:ok) : head(:unprocessable_entity)
   end
 
   def update

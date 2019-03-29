@@ -3,7 +3,10 @@ class Comment < ApplicationRecord
 
   mount_uploader :file, ImageUploader
 
+  TEXT_LENGTH_RANGE = (10..256).freeze
+  FILE_SIZE = 10.megabytes
+
   validates :text, presence: true
-  validates :text, length: { in: 10..256 }
-  validates_size_of :file, maximum: 10.megabytes, message: I18n.t('models.comment.file')
+  validates :text, length: { in: TEXT_LENGTH_RANGE }
+  validates_size_of :file, maximum: FILE_SIZE, message: I18n.t('models.comment.file')
 end

@@ -16,7 +16,6 @@ gem 'jbuilder'
 gem 'jwt'
 gem 'mini_magick'
 gem 'pg'
-gem 'pry'
 gem 'puma', '~> 3.11'
 gem 'pundit'
 gem 'rack-cors', require: 'rack/cors'
@@ -26,6 +25,7 @@ gem 'simple_command'
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
+  gem 'pry'
   gem 'rspec-rails'
   gem 'rubocop-rspec'
 end

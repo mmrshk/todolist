@@ -3,6 +3,7 @@ en:
     user:
       password: 'Only alphanumeric allowed'
       authorize: 'You are successfully logged in!'
+      error: 'Invalid login or password.'
     comment:
       file: 'Should be less than 10MB'
   controllers:

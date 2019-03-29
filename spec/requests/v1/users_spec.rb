@@ -16,7 +16,7 @@ RSpec.describe 'V1::Users', type: :request do
     it 'not register same user' do
       2.times { post api_v1_auth_users_path, params: user_params }
       expect(response).to have_http_status(422)
-      expect(response.body).to include('Username has already been taken')
+      expect(response.body).to include('has already been taken')
     end
 
     context 'invalid user' do
@@ -25,37 +25,37 @@ RSpec.describe 'V1::Users', type: :request do
       it 'do not register user without username' do
         invalid_user = FactoryBot.attributes_for(:user, :no_username)
         post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('Username can\'t be blank')
+        expect(response.body).to include('can\'t be blank')
       end
 
       it 'do not register user without password' do
         invalid_user = FactoryBot.attributes_for(:user, :no_password)
         post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('Password can\'t be blank')
+        expect(response.body).to include('can\'t be blank')
       end
 
       it 'do not register user without confirmation password' do
         invalid_user = FactoryBot.attributes_for(:user, :no_password_confirmation)
         post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('Password confirmation can\'t be blank')
+        expect(response.body).to include('can\'t be blank')
       end
 
       it 'do not register user with too short username' do
         invalid_user = FactoryBot.attributes_for(:user, :short_username)
         post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('Username is too short (minimum is 3 characters)')
+        expect(response.body).to include('is too short (minimum is 3 characters)')
       end
 
       it 'do not register user with too long username' do
         invalid_user = FactoryBot.attributes_for(:user, :long_username)
         post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('Username is too long (maximum is 50 characters)')
+        expect(response.body).to include('is too long (maximum is 50 characters)')
       end
 
       it 'do not register user with not correct password length' do
         invalid_user = FactoryBot.attributes_for(:user, :not_correct_password_length)
         post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('Password is the wrong length (should be 8 characters)')
+        expect(response.body).to include('is the wrong length (should be 8 characters)')
       end
     end
   end
