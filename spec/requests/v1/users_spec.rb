@@ -19,44 +19,11 @@ RSpec.describe 'V1::Users', type: :request do
       expect(response.body).to include('has already been taken')
     end
 
-    context 'invalid user' do
-      after(:each) { expect(response).to have_http_status(422) }
-
-      it 'do not register user without username' do
-        invalid_user = FactoryBot.attributes_for(:user, :no_username)
-        post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('can\'t be blank')
-      end
-
-      it 'do not register user without password' do
-        invalid_user = FactoryBot.attributes_for(:user, :no_password)
-        post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('can\'t be blank')
-      end
-
-      it 'do not register user without confirmation password' do
-        invalid_user = FactoryBot.attributes_for(:user, :no_password_confirmation)
-        post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('can\'t be blank')
-      end
-
-      it 'do not register user with too short username' do
-        invalid_user = FactoryBot.attributes_for(:user, :short_username)
-        post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('is too short (minimum is 3 characters)')
-      end
-
-      it 'do not register user with too long username' do
-        invalid_user = FactoryBot.attributes_for(:user, :long_username)
-        post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('is too long (maximum is 50 characters)')
-      end
-
-      it 'do not register user with not correct password length' do
-        invalid_user = FactoryBot.attributes_for(:user, :not_correct_password_length)
-        post api_v1_auth_users_path, params: invalid_user
-        expect(response.body).to include('is the wrong length (should be 8 characters)')
-      end
+    it 'do not register user with uncorrect params' do
+      invalid_user = FactoryBot.attributes_for(:user, :no_username, :no_password, :no_password_confirmation,
+                                               :not_correct_password_length)
+      post api_v1_auth_users_path, params: invalid_user
+      expect(response).to have_http_status(422)
     end
   end
 
@@ -73,7 +40,7 @@ RSpec.describe 'V1::Users', type: :request do
 
     context 'invalid user' do
       after(:each) do
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(404)
         expect(response.body).to include('Couldn\'t find User')
       end
 

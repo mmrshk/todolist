@@ -4,6 +4,7 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 require 'dox'
+require 'json_matchers/rspec'
 
 begin
   ActiveRecord::Migration.maintain_test_schema!
@@ -52,3 +53,5 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+JsonMatchers.schema_root = 'spec/support/api/schemas'

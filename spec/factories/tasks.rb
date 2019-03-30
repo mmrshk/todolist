@@ -6,6 +6,6 @@ FactoryBot.define do
   end
 
   trait :edited_task do
-    name { 'edited name' }
+    name { 'Edited task' }
   end
 end

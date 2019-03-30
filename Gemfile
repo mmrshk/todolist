@@ -8,7 +8,6 @@ gem 'bcrypt'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'cancancan', '~> 2.0'
 gem 'carrierwave'
-gem 'fast_jsonapi'
 gem 'figaro'
 gem 'fog'
 gem 'google-cloud-storage', '~> 1.8', require: false
@@ -23,7 +22,6 @@ gem 'rails', '~> 5.2.2'
 gem 'simple_command'
 
 group :development, :test do
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'pry'
   gem 'rspec-rails'
@@ -39,6 +37,8 @@ end
 group :test do
   gem 'database_cleaner', '~> 1.6', '>= 1.6.1'
   gem 'dox', require: false
+  gem 'faker'
+  gem 'ffaker'
   gem 'json_matchers', '~> 0.7'
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2'
 end

@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "id": { "type": "number" },
+    "text": { "type": "string" },
+    "file": {
+      "url": { "type": "string" }
+    },
+    "task_id": { "type": "number" },
+    "created_at": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "url": { "type": "string" }
+  },
+  "required": ["text", "id"]
+}

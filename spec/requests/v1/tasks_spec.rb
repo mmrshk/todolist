@@ -12,7 +12,7 @@ RSpec.describe 'V1::Tasks API', type: :request do
 
   let(:headers) { { authorization: token, accept: 'application/json' } }
 
-  describe 'GET /tasks' do
+  describe 'GET /api/v1/tasks' do
     include Docs::V1::Tasks::Index
 
     it 'gets list of tasks', :dox do
@@ -21,7 +21,7 @@ RSpec.describe 'V1::Tasks API', type: :request do
     end
   end
 
-  describe 'POST /tasks' do
+  describe 'POST /api/v1/tasks' do
     include Docs::V1::Tasks::Create
 
     it 'creates new task', :dox do
@@ -30,30 +30,33 @@ RSpec.describe 'V1::Tasks API', type: :request do
       end.to change(Task, :count).by(1)
 
       expect(response).to have_http_status(201)
+      expect(response).to match_json_schema('task')
     end
   end
 
-  describe 'PUT /tasks/:id' do
+  describe 'PUT /api/v1/tasks/:id' do
     include Docs::V1::Tasks::Edit
     let(:edited_task) { FactoryBot.attributes_for(:task, :edited) }
 
     it 'update tasks', :dox do
       put api_v1_task_path(id: task.id), headers: headers, params: edited_task
       expect(response).to have_http_status(200)
-      expect(response.body).to include('edited name')
+      expect(response.body).to include('Edited name')
+      expect(response).to match_json_schema('task')
     end
   end
 
-  describe 'GET /tasks/:id' do
+  describe 'GET /api/v1/tasks/:id' do
     include Docs::V1::Tasks::Get
 
     it 'get task', :dox do
       get api_v1_task_path(id: task.id), headers: headers, params: task_params
       expect(response).to have_http_status(200)
+      expect(response).to match_json_schema('task')
     end
   end
 
-  describe 'DELETE /tasks/:id' do
+  describe 'DELETE /api/v1/tasks/:id' do
     include Docs::V1::Tasks::Delete
 
     it 'delete tasks', :dox do

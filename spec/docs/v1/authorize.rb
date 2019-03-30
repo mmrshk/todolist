@@ -5,7 +5,7 @@ module Docs
 
       document :api do
         resource 'Users' do
-          endpoint '/api/v1/login'
+          endpoint '/api/v1/auth/login'
           group 'Users'
         end
       end

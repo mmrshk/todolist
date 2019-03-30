@@ -5,7 +5,7 @@ module Docs
 
       document :api do
         resource 'Comments' do
-          endpoint '/comments'
+          endpoint 'api/v1/comments'
           group 'Comments'
         end
       end

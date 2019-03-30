@@ -5,7 +5,7 @@ module Docs
 
       document :api do
         resource 'Projects' do
-          endpoint '/projects'
+          endpoint 'api/v1/projects'
           group 'Projects'
         end
       end

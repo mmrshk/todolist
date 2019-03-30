@@ -13,7 +13,7 @@ RSpec.describe 'V1::Comments API', type: :request do
 
   let(:headers) { { authorization: token, accept: 'application/json' } }
 
-  describe 'GET /comments' do
+  describe 'GET /api/v1/comments' do
     include Docs::V1::Comments::Index
 
     it 'gets list of comments', :dox do
@@ -23,7 +23,7 @@ RSpec.describe 'V1::Comments API', type: :request do
     end
   end
 
-  describe 'POST /comments', :dox do
+  describe 'POST /api/v1/comments', :dox do
     include Docs::V1::Comments::Create
     include Docs::V1::Comments::Edit
     let(:edited_comment) { FactoryBot.attributes_for(:comment, :edited_comment) }
@@ -37,30 +37,34 @@ RSpec.describe 'V1::Comments API', type: :request do
       end.to change(Comment, :count).by(1)
 
       expect(response).to have_http_status(201)
+      expect(response).to match_json_schema('comment')
     end
 
     it 'update existed comment' do
       put api_v1_comment_path(id: comment.id), headers: headers, params: edited_comment
       expect(response).to have_http_status(200)
+      expect(response).to match_json_schema('comment')
     end
 
     it 'creates new comment with file' do
       post api_v1_project_task_comments_path(project_id: project.id, task_id: task.id), headers: headers,
                                                                                         params: comment_params
       expect(response).to have_http_status(201)
+      expect(response).to match_json_schema('comment')
     end
   end
 
-  describe 'GET /comment', :dox do
+  describe 'GET /api/v1/comment', :dox do
     include Docs::V1::Comments::Get
 
     it 'get existed comment' do
       get api_v1_comment_path(id: comment.id), headers: headers, params: comment_params
       expect(response).to have_http_status(200)
+      expect(response).to match_json_schema('comment')
     end
   end
 
-  describe 'DELETE /comments/:id', :dox do
+  describe 'DELETE /api/v1/comments/:id', :dox do
     include Docs::V1::Comments::Delete
 
     it 'delete comments' do

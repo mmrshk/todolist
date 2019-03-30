@@ -6,7 +6,7 @@ FactoryBot.define do
   end
 
   trait :no_existing_user do
-    username { 'Dima Bavykin' }
+    username { "#{FFaker::Name.first_name} #{FFaker::Name.last_name}" }
     password { 'justdance' }
     password_confirmation { 'justdance' }
   end

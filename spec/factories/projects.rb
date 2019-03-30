@@ -5,6 +5,6 @@ FactoryBot.define do
   end
 
   trait :edited do
-    name { 'edited name' }
+    name { 'Edited name' }
   end
 end

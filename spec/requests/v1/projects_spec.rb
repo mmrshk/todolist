@@ -25,6 +25,7 @@ RSpec.describe 'V1::Projects API', type: :request do
     it 'creates new project', :dox do
       expect { post api_v1_projects_path, headers: headers, params: project_params }.to change(Project, :count).by(1)
       expect(response).to have_http_status(201)
+      expect(response).to match_json_schema('project')
     end
   end
 
@@ -35,6 +36,7 @@ RSpec.describe 'V1::Projects API', type: :request do
     it 'edit existed project', :dox do
       put api_v1_project_path(id: project.id), headers: headers, params: edited_project
       expect(response).to have_http_status(200)
+      expect(response).to match_json_schema('project')
     end
   end
 
@@ -44,10 +46,11 @@ RSpec.describe 'V1::Projects API', type: :request do
     it 'get existed project', :dox do
       get api_v1_project_path(id: project.id), headers: headers, params: project_params
       expect(response).to have_http_status(200)
+      expect(response).to match_json_schema('project')
     end
   end
 
-  describe 'POST /projects' do
+  describe 'POST /api/v1/projects' do
     it 'do not creates duplicate project' do
       2.times { post api_v1_projects_path, headers: headers, params: project_params }
       expect(response).to have_http_status(422)
@@ -55,7 +58,7 @@ RSpec.describe 'V1::Projects API', type: :request do
     end
   end
 
-  describe 'DELETE /projects/:id' do
+  describe 'DELETE /api/v1/projects/:id' do
     include Docs::V1::Projects::Delete
 
     it 'delete project', :dox do
