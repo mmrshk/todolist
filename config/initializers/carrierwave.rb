@@ -7,4 +7,10 @@ CarrierWave.configure do |config|
     google_storage_secret_access_key: Rails.application.credentials.google_storage_secret_access_key
   }
   config.fog_directory = 'todo-api'
+
+  if Rails.env.production?
+    config.storage = :fog
+  else
+    config.storage = :file
+  end
 end
