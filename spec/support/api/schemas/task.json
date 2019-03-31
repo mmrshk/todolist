@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "id": { "type": "number" },
+    "name": { "type": "string" },
+    "completed": { "type": "boolean" },
+    "deadline": { "type": ["null", "string"] },
+    "created_at": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "position": { "type": "number" },
+    "url": { "type": "string" },
+    "project_id" : { "type": "number" },
+    "comments": { "type": "array" }
+  },
+  "required": ["name", "id"]
+}
